@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduTop - Multilang</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f7f9fc; color: #333; }
+    header { background-color: #004080; color: white; padding: 20px; text-align: center; }
+    nav a { margin: 0 15px; color: white; text-decoration: none; font-weight: bold; }
+    .hero, .quote { background: #e3f2fd; border-radius: 10px; padding: 20px; margin-top: 20px; }
+    .rating li::before { content: "🏅 "; }
+    .lang-switcher button { margin: 0 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EduTop</h1>
+    <div class="lang-switcher mt-2">
+      <button onclick="switchLang('ru')" class="btn btn-light btn-sm">Рус</button>
+      <button onclick="switchLang('kz')" class="btn btn-light btn-sm">Қаз</button>
+      <button onclick="switchLang('en')" class="btn btn-light btn-sm">Eng</button>
+    </div>
+    <nav>
+      <a href="#">Главная</a>
+      <a href="#top">Топ</a>
+      <a href="#assistant">ИИ</a>
+      <a href="#motivation">Мотивация</a>
+      <a href="about.html">О проекте</a>
+    </nav>
+  </header>
+
+  <main class="container mt-4">
+    <section class="hero" id="welcomeText"></section>
+
+    <section id="top">
+      <h3>🏆 <span id="topTitle"></span></h3>
+      <ul class="list-group rating" id="topList"></ul>
+    </section>
+
+    <section id="motivation" class="mt-5">
+      <h3>🔥 <span id="motivationTitle"></span></h3>
+      <div class="quote" id="quote1"></div>
+      <div class="quote mt-3" id="quote2"></div>
+    </section>
+
+    <section id="assistant" class="mt-5">
+      <h3>🤖 <span id="assistantTitle"></span></h3>
+      <p id="assistantDescription"></p>
+      <input type="text" class="form-control mb-2" placeholder="API key" id="apiKey">
+      <div id="chatBox" class="border p-3 mb-2 bg-white" style="height: 200px; overflow-y: auto"></div>
+      <input type="text" id="userInput" class="form-control mb-2" placeholder="...">
+      <button onclick="sendMessage()" class="btn btn-primary" id="askButton">Спросить</button>
+    </section>
+  </main>
+
+  <footer class="text-center mt-5 p-3 bg-light text-muted">
+    &copy; 2025 EduTop. <span id="footerText">Учись с умом!</span>
+  </footer>
+
+  <script>
+    const translations = {
+      ru: {
+        welcome: "<h2>Добро пожаловать на EduTop!</h2><p>Учись, вдохновляйся и попади в рейтинг!</p>",
+        topTitle: "Топ-10 Учеников",
+        topList: [
+          "Айдос А. — 1520 очков ⭐", "Аружан Н. — 1480 очков", "Мирас Т. — 1400 очков",
+          "Диана С. — 1320 очков", "Ильяс К. — 1280 очков", "Жанель М. — 1240 очков",
+          "Малика Е. — 1200 очков", "Рустам А. — 1160 очков", "Санжар Н. — 1120 очков", "Амина Д. — 1100 очков"
+        ],
+        motivationTitle: "Мотивация дня",
+        quote1: "Каждый день — это шанс стать лучше.",
+        quote2: "Успех — результат ежедневных маленьких шагов.",
+        assistantTitle: "Помощник по урокам",
+        assistantDescription: "Спроси ИИ по любой теме — он тебе поможет.",
+        askButton: "Спросить",
+        footer: "Учись с умом!"
+      },
+      kz: {
+        welcome: "<h2>EduTop сайтына қош келдіңіз!</h2><p>Оқы, шабыттан және үздіктер қатарына қосыл!</p>",
+        topTitle: "Аптаның үздік 10 оқушысы",
+        topList: [
+          "Айдос А. — 1520 ұпай ⭐", "Аружан Н. — 1480 ұпай", "Мирас Т. — 1400 ұпай",
+          "Диана С. — 1320 ұпай", "Ілияс К. — 1280 ұпай", "Жанель М. — 1240 ұпай",
+          "Малика Е. — 1200 ұпай", "Рустам А. — 1160 ұпай", "Санжар Н. — 1120 ұпай", "Амина Д. — 1100 ұпай"
+        ],
+        motivationTitle: "Күннің мотивациясы",
+        quote1: "Әр күн — жақсырақ болуға мүмкіндік.",
+        quote2: "Табыс — күнделікті кішкентай қадамдардың нәтижесі.",
+        assistantTitle: "Сабақ көмекшісі",
+        assistantDescription: "Кез келген тақырып бойынша сұрақ қой — ЖИ жауап береді.",
+        askButton: "Сұрау",
+        footer: "Ақылмен оқы!"
+      },
+      en: {
+        welcome: "<h2>Welcome to EduTop!</h2><p>Learn, get inspired, and reach the top!</p>",
+        topTitle: "Top 10 Students of the Week",
+        topList: [
+          "Aidos A. — 1520 pts ⭐", "Aruzhan N. — 1480 pts", "Miras T. — 1400 pts",
+          "Diana S. — 1320 pts", "Ilyas K. — 1280 pts", "Zhanel M. — 1240 pts",
+          "Malika E. — 1200 pts", "Rustam A. — 1160 pts", "Sanzhar N. — 1120 pts", "Amina D. — 1100 pts"
+        ],
+        motivationTitle: "Motivation of the Day",
+        quote1: "Each day is a chance to improve.",
+        quote2: "Success is the result of small steps daily.",
+        assistantTitle: "Lesson Assistant",
+        assistantDescription: "Ask anything and the AI will help you out.",
+        askButton: "Ask",
+        footer: "Learn with purpose!"
+      }
+    };
+
+    function switchLang(lang) {
+      const t = translations[lang];
+      document.getElementById("welcomeText").innerHTML = t.welcome;
+      document.getElementById("topTitle").innerText = t.topTitle;
+      document.getElementById("motivationTitle").innerText = t.motivationTitle;
+      document.getElementById("quote1").innerText = t.quote1;
+      document.getElementById("quote2").innerText = t.quote2;
+      document.getElementById("assistantTitle").innerText = t.assistantTitle;
+      document.getElementById("assistantDescription").innerText = t.assistantDescription;
+      document.getElementById("askButton").innerText = t.askButton;
+      document.getElementById("footerText").innerText = t.footer;
+
+      const topList = document.getElementById("topList");
+      topList.innerHTML = "";
+      t.topList.forEach(item => {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+        li.textContent = item;
+        topList.appendChild(li);
+      });
+    }
+
+    switchLang('ru'); // default language
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const apiKey = document.getElementById("apiKey").value;
+      const chatBox = document.getElementById("chatBox");
+      const userMessage = input.value.trim();
+      if (!userMessage || !apiKey) return;
+      chatBox.innerHTML += `<div><strong>Ты:</strong> ${userMessage}</div>`;
+      input.value = "";
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: userMessage }]
+        })
+      });
+      const data = await response.json();
+      const aiMessage = data.choices?.[0]?.message?.content || "Ошибка.";
+      chatBox.innerHTML += `<div><strong>ИИ:</strong> ${aiMessage}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
