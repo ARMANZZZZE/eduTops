@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduTop - ИИ Ассистент</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <header>
+    <h1>EduTop</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="top.html">Топ-10 Школ</a>
+      <a href="assistant.html">ИИ Ассистент</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Чат с ИИ Ассистентом</h2>
+    <input type="text" id="apiKey" placeholder="Вставьте OpenAI API ключ"/>
+    <div id="chatBox"></div>
+    <input type="text" id="userInput" placeholder="Напишите сообщение..."/>
+    <button onclick="sendMessage()">Отправить</button>
+  </main>
+  <footer>
+    <p>&copy; 2025 EduTop. Все права защищены.</p>
+  </footer>
+  <script src="js/assistant.js"></script>
+</body>
+</html>

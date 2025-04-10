@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>О проекте EduTop</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f9ff; }
+    header { background-color: #003366; color: white; padding: 20px; text-align: center; }
+    .lang-buttons button { margin: 0 5px; }
+    .content { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EduTop</h1>
+    <p>🌍 <span id="aboutTitle">О проекте</span></p>
+    <div class="lang-buttons mt-3">
+      <button class="btn btn-light btn-sm" onclick="switchLang('ru')">Рус</button>
+      <button class="btn btn-light btn-sm" onclick="switchLang('kz')">Қаз</button>
+      <button class="btn btn-light btn-sm" onclick="switchLang('en')">Eng</button>
+    </div>
+  </header>
+
+  <main class="container content" id="aboutContent"></main>
+
+  <script>
+    const aboutData = {
+      ru: {
+        title: "О проекте",
+        content: `
+          <h2>Что такое EduTop?</h2>
+          <p>EduTop — это образовательная онлайн-платформа, созданная для того, чтобы помочь ученикам учиться лучше, мотивировать их достигать новых целей и поощрять активное участие в обучении.</p>
+          <p>На сайте вы найдете:</p>
+          <ul>
+            <li>ИИ-ассистента, готового ответить на ваши вопросы;</li>
+            <li>Рейтинг учеников, который мотивирует стараться больше;</li>
+            <li>Мотивационные цитаты и задания;</li>
+            <li>Поддержку на трёх языках — Русский, Қазақша, English.</li>
+          </ul>
+          <p>EduTop делает обучение увлекательным, современным и доступным каждому!</p>
+        `
+      },
+      kz: {
+        title: "Жоба туралы",
+        content: `
+          <h2>EduTop деген не?</h2>
+          <p>EduTop — бұл оқушыларға жақсы оқуға, мақсаттарға жетуге және белсенді оқуға ынталандыру үшін жасалған онлайн білім беру платформасы.</p>
+          <p>Сайттан таба аласыз:</p>
+          <ul>
+            <li>Сұрақтарыңызға жауап беретін ЖИ көмекшісі;</li>
+            <li>Көбірек тырысуға ынталандыратын оқушылар рейтингі;</li>
+            <li>Мотивациялық дәйексөздер мен тапсырмалар;</li>
+            <li>Үш тілде қолдау — Қазақша, Русский, English.</li>
+          </ul>
+          <p>EduTop — оқуды қызықты, заманауи және әркімге қолжетімді етеді!</p>
+        `
+      },
+      en: {
+        title: "About the Project",
+        content: `
+          <h2>What is EduTop?</h2>
+          <p>EduTop is an educational online platform designed to help students learn better, stay motivated, and actively participate in their learning process.</p>
+          <p>On this site, you will find:</p>
+          <ul>
+            <li>An AI assistant ready to answer your questions;</li>
+            <li>A student ranking system to inspire excellence;</li>
+            <li>Motivational quotes and weekly challenges;</li>
+            <li>Support in three languages — English, Русский, Қазақша.</li>
+          </ul>
+          <p>EduTop makes learning fun, modern, and accessible to everyone!</p>
+        `
+      }
+    };
+
+    function switchLang(lang) {
+      const data = aboutData[lang];
+      document.getElementById("aboutTitle").textContent = data.title;
+      document.getElementById("aboutContent").innerHTML = data.content;
+    }
+
+    switchLang('ru');
+  </script>
+</body>
+</html>
